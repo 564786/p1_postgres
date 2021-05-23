@@ -1,0 +1,148 @@
+#Crear tablas temp y final
+
+DROP DATABASE IF EXISTS p1;
+CREATE DATABASE p1;
+CREATE TABLE `p1`.`tmp_alumnosEgresados`(
+	`CURSO_ACADEMICO` varchar(50) NOT NULL,
+	`LOCALIDAD` varchar(50) NOT NULL,
+	`ESTUDIO` varchar(50) NOT NULL,
+	`TIPO_ESTUDIO` varchar(50) NOT NULL,
+	`TIPO_EGRESO` varchar(50) NOT NULL,
+	`SEXO` varchar(50) NOT NULL,
+	`ALUMNOS_GRADUADOS` INT NOT NULL,
+	`ALUMNOS_INTERRUMPEN_ESTUDIOS` INT NOT NULL,
+	`ALUMNOS_INTERRUMPEN_EST_ANO1` INT NOT NULL,
+	`ALUMNOS_TRASLADAN_OTRA_UNIV` INT NOT NULL,
+	`DURACION_MEDIA_GRADUADOS` varchar(50) NOT NULL,
+	`TASA_EFICIENCIA` varchar(50) NOT NULL,
+	`FECHA_ACTUALIZACION` varchar(50) NOT NULL
+);
+
+CREATE TABLE `p1`.`tmp_acuerdosMovilidad`(
+	`CURSO_ACADEMICO` varchar(50) NOT NULL,
+	`NOMBRE_PROGRAMA_MOVILIDAD` varchar(50) NOT NULL,
+	`NOMBRE_AREA_ESTUDIOS_MOV` varchar(50) NOT NULL,
+	`CENTRO` varchar(50) NOT NULL,
+	`IN_OUT` varchar(50) NOT NULL,
+	`NOMBRE_IDIOMA_NIVEL_MOVILIDAD` varchar(50) NOT NULL,
+	`PAIS_UNIVERSIDAD_ACUERDO` varchar(50) NOT NULL,
+	`UNIVERSIDAD_ACUERDO` varchar(50) NOT NULL,
+	`PLAZAS_OFERTADAS_ALUMNOS` varchar(50) NOT NULL,
+	`PLAZAS_ASIGNADAS_ALUMNOS_OUT` varchar(50) NOT NULL,
+	`FECHA_ACTUALIZACION` varchar(50) NOT NULL
+);
+
+CREATE TABLE `p1`.`tmp_resultadosTitulaciones`(
+	`CURSO_ACADEMICO` varchar(50) NOT NULL,
+	`CENTRO` varchar(50) NOT NULL,
+	`ESTUDIO` varchar(50) NOT NULL,
+	`TIPO_ESTUDIO` varchar(50) NOT NULL,
+	`ALUMNOS_MATRICULADOS` varchar(50) NOT NULL,
+	`ALUMNOS_NUEVO_INGRESO` varchar(50) NOT NULL,
+	`PLAZAS_OFERTADAS` varchar(50) NOT NULL,
+	`ALUMNOS_GRADUADOS` varchar(50) NOT NULL,
+	`ALUMNOS_ADAPTA_GRADO_MATRI` varchar(50) NOT NULL,
+	`ALUMNOS_ADAPTA_GRADO_MATRI_NI` varchar(50) NOT NULL,
+	`ALUMNOS_ADAPTA_GRADO_TITULADO` varchar(50) NOT NULL,
+	`ALUMNOS_CON_RECONOCIMIENTO` varchar(50) NOT NULL,
+	`ALUMNOS_MOVILIDAD_ENTRADA` varchar(50) NOT NULL,
+	`ALUMNOS_MOVILIDAD_SALIDA` varchar(50) NOT NULL,
+	`CREDITOS_MATRICULADOS` varchar(50) NOT NULL,
+	`CREDITOS_RECONOCIDOS` varchar(50) NOT NULL,
+	`DURACION_MEDIA_GRADUADOS` varchar(50) NOT NULL,
+	`TASA_EXITO` varchar(50) NOT NULL,
+	`TASA_RENDIMIENTO` varchar(50) NOT NULL,
+	`TASA_EFICIENCIA` varchar(50) NOT NULL,
+	`TASA_ABANDONO` varchar(50) NOT NULL,
+	`TASA_GRADUACION` varchar(50) NOT NULL,
+	`FECHA_ACTUALIZACION` varchar(50) NOT NULL
+);
+
+CREATE TABLE `p1`.`tmp_ofertaYOcupacion`(
+	`CURSO_ACADEMICO` varchar(50) NOT NULL,
+	`ESTUDIO` varchar(50) NOT NULL,
+	`LOCALIDAD` varchar(50) NOT NULL,
+	`CENTRO` varchar(50) NOT NULL,
+	`TIPO_CENTRO` varchar(50) NOT NULL,
+	`TIPO_ESTUDIO` varchar(50) NOT NULL,
+	`PLAZAS_OFERTADAS` varchar(50) NOT NULL,
+	`PLAZAS_MATRICULADAS` varchar(50) NOT NULL,
+	`PLAZAS_SOLICITADAS` varchar(50) NOT NULL,
+	`INDICE_OCUPACION` varchar(50) NOT NULL,
+	`FECHA_ACTUALIZACION` varchar(50) NOT NULL
+);
+
+CREATE TABLE `p1`.`tmp_notasCorteDefinitivas`(
+	`CURSO_ACADEMICO` varchar(50) NOT NULL,
+	`ESTUDIO` varchar(50) NOT NULL,
+	`LOCALIDAD` varchar(50) NOT NULL,
+	`CENTRO` varchar(50) NOT NULL,
+	`PRELA_CONVO_NOTA_DEF` varchar(50) NOT NULL,
+	`NOTA_CORTE_DEFINITIVA_JULIO` varchar(50) NOT NULL,
+	`NOTA_CORTE_DEFINITIVA_SEPTIEMBRE` varchar(50) NOT NULL,
+	`FECHA_ACTUALIZACION` varchar(50) NOT NULL
+);
+
+DROP TABLE IF EXISTS egresos;
+
+CREATE TABLE `p1`.`egresos`(
+	`id` int(6) NOT NULL auto_increment,
+	`cursoAcademico` VARCHAR(50) NOT NULL,
+	`localidad` VARCHAR(80) NOT NULL,
+	`estudio` VARCHAR(80) NOT NULL,
+	`alumnosQueAbandonan` VARCHAR(3), #ALUMNOS_INTERRUMPEN_ESTUDIOS
+
+	PRIMARY KEY  (`id`)
+);
+
+DROP TABLE IF EXISTS localidades;
+
+CREATE TABLE `p1`.`localidades`(
+	`id` int(6) NOT NULL auto_increment,
+	`localidad` varchar(40) NOT NULL,
+	PRIMARY KEY  (`id`)
+);
+
+DROP TABLE IF EXISTS centros;
+
+CREATE TABLE `p1`.`centros`(
+	`id` int(6) NOT NULL auto_increment,
+	`centro` varchar(80) NOT NULL,
+	`localidad` varchar(50) NOT NULL,
+	`tipoCentro` varchar(50) NOT NULL,
+	PRIMARY KEY  (`id`)
+);
+
+DROP TABLE IF EXISTS acuerdos;
+
+CREATE TABLE `p1`.`acuerdos`(
+	`idAcuerdo` int(6) NOT NULL auto_increment,
+	`centro` VARCHAR(80) NOT NULL,
+	`pais` VARCHAR(50) NOT NULL,
+	`universidadAcuerdo` VARCHAR(80) NOT NULL,
+	`cursoAcademico` varchar(50) NOT NULL,
+	`areaEstudios` varchar(80) NOT NULL,
+	`idioma` varchar(50) NOT NULL,
+	`plazasOfertadas` INT NOT NULL,
+	`plazasAsignadas` INT NOT NULL,
+	PRIMARY KEY  (`idAcuerdo`)
+);
+
+DROP TABLE IF EXISTS estudios;
+
+CREATE TABLE `p1`.`estudios`(
+	`id` int(6) NOT NULL auto_increment,
+	`estudio` VARCHAR(80) NOT NULL,
+	`centro` VARCHAR(80) NOT NULL,
+	`cursoAcademico` VARCHAR(50) NOT NULL,
+	`plazasOfertadas` VARCHAR(5),
+	`plazasMatriculadas` VARCHAR(5),
+	`plazasSolicitadas` VARCHAR(5),
+	`indiceOcupacion` VARCHAR(5),
+	`notacorteJulio` VARCHAR(5),
+	`notacorteSeptiembre` VARCHAR(5),
+	`alumnosQueAbandonan` VARCHAR(5),
+	PRIMARY KEY  (`id`)
+);
+
+
